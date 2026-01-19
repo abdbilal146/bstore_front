@@ -5,6 +5,8 @@ import { getAllProductWishlist } from "../api/wishlist";
 import ProductCard from "./ProductCard";
 import { useNavigate } from "@tanstack/react-router";
 
+
+
 export default function Wishlist() {
     const { getIdToken } = useLogto()
     const navigate = useNavigate()

@@ -12,6 +12,8 @@ import { Cart } from './Cart'
 import { useQuery } from '@tanstack/react-query'
 import { getCart } from '../api/cart'
 
+const VITE_FRONT_DOMAIN_CALLBACK = import.meta.env.VITE_FRONT_DOMAIN_CALLBACK
+
 
 
 const categoryList: any[] = [
@@ -92,7 +94,7 @@ export default function Header() {
                 navigate({ to: '/user' })
             }
             else {
-                await signIn('http://localhost:5173/callback')
+                await signIn(VITE_FRONT_DOMAIN_CALLBACK)
 
             }
         } else {

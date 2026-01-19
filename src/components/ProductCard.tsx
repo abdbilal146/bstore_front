@@ -6,6 +6,7 @@ import { addToWishlist, getAllProductWishlist, deleteProductFromWishlist } from 
 import { useLogto } from "@logto/react";
 
 const erpNextBasUrl: string = import.meta.env.VITE_ERP_NEXT_BASE_URL;
+const VITE_FRONT_DOMAIN_CALLBACK = import.meta.env.VITE_FRONT_DOMAIN_CALLBACK
 
 export default function ProductCard({ imageSource, productId, onClick, productName, price }: { imageSource: string, productId: string, onClick: () => void, productName: string, price: string }) {
 
@@ -80,7 +81,7 @@ export default function ProductCard({ imageSource, productId, onClick, productNa
         e.stopPropagation();
 
         if (!isAuthenticated) {
-            signIn("http://localhost:5173/callback")
+            signIn(VITE_FRONT_DOMAIN_CALLBACK)
             return null
         }
 

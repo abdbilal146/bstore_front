@@ -19,6 +19,8 @@ import { IconHeart } from "@tabler/icons-react";
 import { useLogto } from "@logto/react";
 import { addProductToCart } from "../../api/cart";
 
+const VITE_FRONT_DOMAIN_CALLBACK = import.meta.env.VITE_FRONT_DOMAIN_CALLBACK
+
 const query = {
   fields: ["image", "name", "item_name", "description", "custom_price"],
   page: 1,
@@ -106,7 +108,7 @@ export default function ProductDescriptionPage() {
     if (!selectedVariant) return;
 
     if (!isAuthenticated) {
-      signIn("http://localhost:5173/callback");
+      signIn(VITE_FRONT_DOMAIN_CALLBACK);
       return;
     }
 
