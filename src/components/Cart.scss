@@ -1,0 +1,84 @@
+@import "@mantine/core/styles.css";
+
+.cart-item {
+    background-color: white;
+    border-radius: 12px;
+    padding: 12px;
+    margin-bottom: 12px;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
+    transition: all 0.2s ease;
+    display: flex;
+    gap: 16px;
+    align-items: center;
+
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+}
+
+.cart-image {
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
+    object-fit: cover;
+    background-color: #f8f9fa;
+}
+
+.cart-details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.cart-product-name {
+    font-weight: 600;
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 4px;
+}
+
+.cart-product-id {
+    font-size: 0.8rem;
+    color: #888;
+}
+
+.cart-empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 400px;
+    color: #888;
+    text-align: center;
+}
+
+.cart-summary {
+    background: #f8f9fa;
+    border-radius: 16px;
+    padding: 24px;
+    height: fit-content;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    color: #555;
+    font-size: 0.95rem;
+
+    &.total {
+        font-weight: 700;
+        color: #000;
+        font-size: 1.2rem;
+        margin-top: 16px;
+    }
+}
+
+.summary-divider {
+    height: 1px;
+    background: rgba(0, 0, 0, 0.08);
+    margin: 16px 0;
+}

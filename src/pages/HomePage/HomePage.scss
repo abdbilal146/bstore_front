@@ -1,0 +1,15 @@
+.title-container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 2vh;
+    background: rgb(240, 238, 238);
+}
+
+
+.title-container>div h1 {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #1D2858;
+}

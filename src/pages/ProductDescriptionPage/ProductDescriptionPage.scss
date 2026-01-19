@@ -1,0 +1,90 @@
+// Main container for the product page content
+.product-info-container {
+    display: flex;
+    flex-direction: row;
+    gap: 4rem;
+    padding: 2rem 5%;
+    max-width: 1400px;
+    margin: 0 auto;
+    align-items: flex-start;
+    padding-top: 4rem;
+
+    @media (max-width: 1024px) {
+        gap: 2rem;
+        padding: 2rem;
+    }
+
+    @media (max-width: 768px) {
+        flex-direction: column;
+        padding-top: 2rem;
+    }
+}
+
+// Left column: Image
+.product-image-section {
+    flex: 1.2;
+    width: 100%;
+}
+
+// Right column: Details
+.product-details-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 1.5rem;
+    width: 100%;
+}
+
+.product-name {
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+    color: #000;
+}
+
+.product-price {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #444;
+}
+
+.product-options {
+    width: 100%;
+    max-width: 400px;
+}
+
+// Purchase buttons row
+.purchase-btn-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 1rem;
+    width: 100%;
+    max-width: 400px;
+    margin-top: 1rem;
+}
+
+
+// Override Mantine styles if needed for specific aesthetic
+.purchase-btn {
+    transition: transform 0.2s ease, background-color 0.2s ease;
+
+    &:hover {
+        transform: translateY(-2px);
+    }
+}
+
+.wishlist-btn {
+    border-color: #e0e0e0;
+    color: #555;
+    transition: all 0.2s ease;
+
+    &:hover {
+        background-color: #f8f9fa;
+        color: #e03131;
+        border-color: #e03131;
+    }
+}
