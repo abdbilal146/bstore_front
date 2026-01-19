@@ -5,7 +5,7 @@ import { brands, inspiration } from "../constants/brands"
 import './CategoriesSection.scss'
 
 import './CategoriesSection.scss'
-import { Container, Title, Grid, Paper, Group } from "@mantine/core"
+import { Container, Title, Grid, Paper } from "@mantine/core"
 
 export default function CategoriesSection() {
     const navigate = useNavigate()

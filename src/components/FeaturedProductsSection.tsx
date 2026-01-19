@@ -1,6 +1,6 @@
 import { Carousel } from "@mantine/carousel"
 import { useQuery } from "@tanstack/react-query"
-import { fetchAllTemplates, fetchProducts } from "../api/product"
+import { fetchAllTemplates} from "../api/product"
 import { useEffect, useState } from "react"
 import ProductCard from "./ProductCard"
 import { useNavigate } from "@tanstack/react-router"

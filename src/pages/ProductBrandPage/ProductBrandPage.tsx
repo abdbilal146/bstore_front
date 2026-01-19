@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchAllTemplates, fetchProducts } from "../../api/product";
+import { fetchAllTemplates } from "../../api/product";
 import { Center, Loader, Container, Title, SimpleGrid, Text, Box } from "@mantine/core";
 import { productListPageRoute } from "../../router/routes";
 import ProductCard from "../../components/ProductCard";

@@ -50,7 +50,7 @@ export default function CheckoutPage() {
             const token = await getIdToken();
             return startPayment(request, token);
         },
-        onMutate: async (request) => {
+        onMutate: async (/* request */) => {
             await queryClient.cancelQueries({ queryKey: ['cart'] });
 
             const previous = queryClient.getQueryData(['cart']);

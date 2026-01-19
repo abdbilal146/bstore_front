@@ -26,6 +26,8 @@ export default function Wishlist() {
     const wishlistItem = data?.map(item => {
         return (
             <ProductCard
+                productName="sq"
+                price={item.custom_price}
                 key={item.productId || item.id}
                 imageSource={item.image}
                 productId={item.productId}

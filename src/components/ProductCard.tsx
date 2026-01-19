@@ -11,7 +11,7 @@ export default function ProductCard({ imageSource, productId, onClick, productNa
 
     const { getIdToken, isAuthenticated, signIn } = useLogto()
     const queryClient = useQueryClient()
-    const { data, error, isLoading } = useQuery<any[]>({
+    const { data, /* error */ isLoading } = useQuery<any[]>({
         queryKey: ['wishlist', isAuthenticated],
         enabled: isAuthenticated,
         queryFn: async () => {
