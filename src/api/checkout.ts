@@ -1,8 +1,8 @@
 
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL
-const CLIENT_ID = import.meta.env.CLIENT_ID
-const CLIENT_SECRET = import.meta.env.CLIENT_SECRET
+const CLIENT_ID = import.meta.env.VITE_CLIENT_ID
+const CLIENT_SECRET = import.meta.env.VITE_CLIENT_SECRET
 
 export interface ShippingAddrss {
     fullName: string,
