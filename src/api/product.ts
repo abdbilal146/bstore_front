@@ -24,8 +24,8 @@ export const fetchAllTemplates = async (query: ProductQuery) => {
     const response = await fetch(url.toString(), {
         method: 'GET',
         headers: {
-            'X-Client-Id': '1f9b7c3a-4bcd-4f3a-bd4a-8d2e6b5c1234',
-            'X-Client-Secret': 'X4aH8vK9LqP1Zb9jF3rU2s9xYk1m2n3pQv4tR5u6V7w=',
+            'X-Client-Id': CLIENT_ID,
+            'X-Client-Secret': CLIENT_SECRET,
         },
     });
 
@@ -54,8 +54,8 @@ export const fetchProducts = async (query: ProductQuery) => {
     const response = await fetch(url.toString(), {
         method: 'GET',
         headers: {
-            'X-Client-Id': '1f9b7c3a-4bcd-4f3a-bd4a-8d2e6b5c1234',
-            'X-Client-Secret': 'X4aH8vK9LqP1Zb9jF3rU2s9xYk1m2n3pQv4tR5u6V7w=',
+            'X-Client-Id': CLIENT_ID,
+            'X-Client-Secret': CLIENT_SECRET,
         },
     });
 
@@ -83,8 +83,8 @@ export const fetchProductById = async (query: ProductQuery, id: string) => {
     const response = await fetch(url.toString(), {
         method: 'GET',
         headers: {
-            'X-Client-Id': '1f9b7c3a-4bcd-4f3a-bd4a-8d2e6b5c1234',
-            'X-Client-Secret': 'X4aH8vK9LqP1Zb9jF3rU2s9xYk1m2n3pQv4tR5u6V7w=',
+            'X-Client-Id': CLIENT_ID,
+            'X-Client-Secret': CLIENT_SECRET,
         },
     });
 
