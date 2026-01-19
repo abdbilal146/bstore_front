@@ -10,7 +10,7 @@ import './FeaturedProductSection.scss'
 const query = {
     fields: ['custom_tags', 'image', 'name', 'item_name', 'custom_price'],
     page: 1,
-    size: 20
+    size: 50
 };
 
 export default function FeatureProductsSection() {
