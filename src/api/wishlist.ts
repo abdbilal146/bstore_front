@@ -42,7 +42,7 @@ export const getAllProductWishlist = async (token: any) => {
 
 
 export const deleteProductFromWishlist = async (productId: string, token: any) => {
-    const response = await fetch(`${BASE_URL}/api/private/wishlist/${productId}`, {
+    const response = await fetch(`${BASE_URL}api/private/wishlist/${productId}`, {
         method: 'DELETE',
         headers: {
             'Authorization': `Bearer ${token}`,
