@@ -10,7 +10,8 @@ import { useState, type ReactNode } from 'react'
 import Wishlist from './Wishlist'
 import { Cart } from './Cart'
 import { useQuery } from '@tanstack/react-query'
-import { getCart } from '../api/cart'
+import { useCartApi } from '../api/cart'
+
 
 const VITE_FRONT_DOMAIN_CALLBACK = import.meta.env.VITE_FRONT_DOMAIN_CALLBACK
 
@@ -73,14 +74,14 @@ export default function Header() {
     const { signIn, isAuthenticated, isLoading, getIdToken } = useLogto()
     const navigate = useNavigate()
     const [drawerContent, setDrawerContent] = useState<ReactNode>()
+    const {getCart} = useCartApi()
 
 
     const { data: cartModel } = useQuery({
         queryKey: ['cart'],
         enabled: isAuthenticated,
         queryFn: async () => {
-            const token = await getIdToken();
-            return getCart(token);
+            return getCart();
         }
     });
 

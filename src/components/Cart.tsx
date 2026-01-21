@@ -5,22 +5,24 @@ import { Box, Button, Center, Grid, Image, Loader, Stack, Text, Title } from "@m
 import './Cart.scss';
 import { IconShoppingCartX } from "@tabler/icons-react";
 import { useNavigate } from "@tanstack/react-router";
-import { getCart } from "../api/cart";
+import { useCartApi } from "../api/cart";
+
 
 const erpBaseUrl: string = import.meta.env.VITE_ERP_NEXT_BASE_URL
 
 export function Cart() {
 
+    const {getCart} = useCartApi()
+
     const navigate = useNavigate()
 
-    const { getIdToken, isAuthenticated } = useLogto();
+    const { isAuthenticated } = useLogto();
 
     const { data: cartModel, isLoading, error } = useQuery({
         queryKey: ['cart'],
         enabled: isAuthenticated,
         queryFn: async () => {
-            const token = await getIdToken();
-            return getCart(token);
+            return getCart();
         }
     });
 

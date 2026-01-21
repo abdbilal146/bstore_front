@@ -9,7 +9,6 @@ import {
     IconLock
 } from '@tabler/icons-react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { getCart } from '../../api/cart';
 import { useLogto } from '@logto/react';
 import { startPayment, type CheckoutRequest, type ShippingAddrss } from '../../api/checkout';
 import {
@@ -27,6 +26,7 @@ import {
     Box
 } from '@mantine/core';
 import Footer from '../../components/Footer';
+import { useCartApi } from '../../api/cart';
 
 const erpBaseUrl = import.meta.env.VITE_ERP_NEXT_BASE_URL;
 
@@ -35,13 +35,13 @@ export default function CheckoutPage() {
     const [shippingMethod, setShippingMethod] = useState('STANDARD');
     const { isAuthenticated, getIdToken, signIn } = useLogto();
     const queryClient = useQueryClient();
+    const {getCart} = useCartApi()
 
     const { data: cartData } = useQuery({
         enabled: isAuthenticated,
         queryKey: ["cart"],
         queryFn: async () => {
-            const token = await getIdToken();
-            return getCart(token);
+            return getCart();
         }
     });
 

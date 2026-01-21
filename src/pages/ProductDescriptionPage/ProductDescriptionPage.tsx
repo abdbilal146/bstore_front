@@ -15,9 +15,11 @@ import {
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { fetchVariantsBytemplateId } from "../../api/product";
 import "./ProductDescriptionPage.scss";
-import { IconHeart } from "@tabler/icons-react";
+import { IconHeart, IconHeartFilled } from "@tabler/icons-react";
 import { useLogto } from "@logto/react";
-import { addProductToCart } from "../../api/cart";
+import { useCartApi } from "../../api/cart";
+import { addToWishlist, getAllProductWishlist, deleteProductFromWishlist } from "../../api/wishlist";
+
 
 const VITE_FRONT_DOMAIN_CALLBACK = import.meta.env.VITE_FRONT_DOMAIN_CALLBACK
 
@@ -40,13 +42,24 @@ type Variant = {
 
 export default function ProductDescriptionPage() {
   const queryClient = useQueryClient();
-  const { getIdToken, isAuthenticated, signIn } = useLogto();
+  const { isAuthenticated, signIn, getIdToken } = useLogto();
   const { templateId } = pdpRoute.useParams();
+  const { addProductToCart } = useCartApi();
 
+  // Fetch Product Data
   const { data, isLoading, error } = useQuery({
     queryKey: ["product", templateId],
     queryFn: () => fetchVariantsBytemplateId(query, templateId),
     enabled: !!templateId,
+  });
+
+  // Fetch Wishlist Data
+  const { data: wishlistData, refetch: refetchWishlist } = useQuery<any[]>({
+    queryKey: ["wishlist"],
+    queryFn: async () => {
+      const token = await getIdToken();
+      return getAllProductWishlist(token);
+    },
   });
 
   const variants: Variant[] = Array.isArray((data as any)?.data)
@@ -62,7 +75,12 @@ export default function ProductDescriptionPage() {
     }
   }, [variants]);
 
-  const addMutation = useMutation({
+  // Check if current variant is in wishlist
+  const isFavorite = wishlistData?.some(
+    (item: any) => item.productId === selectedVariant?.name
+  );
+
+  const addCartMutation = useMutation({
     mutationFn: async ({
       id,
       price,
@@ -72,27 +90,15 @@ export default function ProductDescriptionPage() {
       price: string;
       image: string;
     }) => {
-      const token = await getIdToken();
-      return addProductToCart(id, price, image || "", token);
+      return addProductToCart(id, price, image || "");
     },
-    onMutate: async ({
-      id,
-      price,
-      image,
-    }: {
-      id: string;
-      price: string;
-      image: string;
-    }) => {
+    onMutate: async ({ id, price, image }) => {
       await queryClient.cancelQueries({ queryKey: ["cart"] });
-
       const previous = queryClient.getQueryData<any[]>(["cart"]);
-
       queryClient.setQueryData<any[]>(["cart"], (old) => [
         ...(Array.isArray(old) ? old : []),
         { productId: id, price, image },
       ]);
-
       return { previous };
     },
     onError: (_err, _vars, context) => {
@@ -103,6 +109,57 @@ export default function ProductDescriptionPage() {
     },
   });
 
+  const addWishlistMutation = useMutation({
+    mutationFn: async ({
+      productId,
+      image,
+    }: {
+      productId: string;
+      image: string;
+    }) => {
+      const token = await getIdToken();
+      return addToWishlist(productId, image, token);
+    },
+    onMutate: async ({ productId, image }) => {
+      // optimistically update wishlist
+      await queryClient.cancelQueries({ queryKey: ["wishlist"] });
+      const previousWishlist = queryClient.getQueryData<any[]>(["wishlist"]);
+      queryClient.setQueryData<any[]>(["wishlist"], (old: any[] | undefined) => [
+        ...(old || []),
+        { productId, image },
+      ]);
+      return { previousWishlist };
+    },
+    onError: (_err, _vars, context) => {
+      queryClient.setQueryData(["wishlist"], context?.previousWishlist);
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["wishlist"] });
+    }
+  });
+
+  const deleteWishlistMutation = useMutation({
+    mutationFn: async (productId: string) => {
+      const token = await getIdToken();
+      return deleteProductFromWishlist(productId, token);
+    },
+    onMutate: async (productId) => {
+      await queryClient.cancelQueries({ queryKey: ["wishlist"] });
+      const previousWishlist = queryClient.getQueryData<any[]>(["wishlist"]);
+      queryClient.setQueryData<any[]>(["wishlist"], (old: any[] | undefined) =>
+        (old || []).filter(item => item.productId !== productId)
+      );
+      return { previousWishlist };
+    },
+    onError: (_err, _vars, context) => {
+      queryClient.setQueryData(["wishlist"], context?.previousWishlist);
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["wishlist"] });
+    }
+  });
+
+
   const handleAddToCart = (e: React.MouseEvent) => {
     e.stopPropagation();
     if (!selectedVariant) return;
@@ -112,12 +169,32 @@ export default function ProductDescriptionPage() {
       return;
     }
 
-    addMutation.mutate({
+    addCartMutation.mutate({
       id: selectedVariant.name,
       price: selectedVariant.custom_price,
       image: selectedVariant.image || "",
     });
   };
+
+  const handleToggleWishlist = async (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (!selectedVariant) return;
+
+    if (!isAuthenticated) {
+      signIn(VITE_FRONT_DOMAIN_CALLBACK);
+      return;
+    }
+
+    if (isFavorite) {
+      deleteWishlistMutation.mutate(selectedVariant.name);
+    } else {
+      addWishlistMutation.mutate({
+        productId: selectedVariant.name,
+        image: selectedVariant.image || ""
+      });
+    }
+  }
+
 
   if (isLoading) {
     return (
@@ -184,13 +261,23 @@ export default function ProductDescriptionPage() {
               size="md"
               radius="md"
               onClick={handleAddToCart}
-              loading={addMutation.isPending}
+              loading={addCartMutation.isPending}
             >
               Ajouter le produit au panier
             </Button>
 
-            <ActionIcon variant="default" size="input-md" radius="md">
-              <IconHeart size="1.2rem" stroke={1.5} />
+            <ActionIcon
+              variant="default"
+              size="input-md"
+              radius="md"
+              onClick={handleToggleWishlist}
+              loading={addWishlistMutation.isPending || deleteWishlistMutation.isPending}
+            >
+              {isFavorite ? (
+                <IconHeartFilled size="1.2rem" style={{ color: "red" }} />
+              ) : (
+                <IconHeart size="1.2rem" stroke={1.5} />
+              )}
             </ActionIcon>
           </div>
 
