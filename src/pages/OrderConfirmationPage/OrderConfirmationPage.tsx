@@ -107,7 +107,7 @@ export default function OrderConfirmationPage() {
                         <Button
                             variant="default"
                             size="md"
-                            onClick={() => navigate({ to: '/user' })}
+                            onClick={() => navigate({ to: '/my-orders' })}
                         >
                             Voir mes commandes
                         </Button>
