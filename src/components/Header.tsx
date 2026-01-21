@@ -71,7 +71,7 @@ const navigations: { name: string, items?: string[] }[] = [
 export default function Header() {
 
     const [opened, { open, close }] = useDisclosure()
-    const { signIn, isAuthenticated, isLoading, getIdToken } = useLogto()
+    const { signIn, isAuthenticated, isLoading} = useLogto()
     const navigate = useNavigate()
     const [drawerContent, setDrawerContent] = useState<ReactNode>()
     const {getCart} = useCartApi()
