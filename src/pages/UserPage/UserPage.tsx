@@ -6,6 +6,9 @@ import { IconPackage, IconHeart, IconSettings, IconMapPin, IconLogout, IconUser 
 import './UserPage.scss';
 import { useNavigate } from "@tanstack/react-router";
 
+
+const FRONT_DOMAIN = import.meta.env.VITE_FRONT_DOMAIN
+
 export default function UserPage() {
     const { isAuthenticated, signOut, fetchUserInfo } = useLogto();
     const naviagte = useNavigate()
@@ -19,7 +22,7 @@ export default function UserPage() {
     });
 
     const handleLogout = () => {
-        signOut('http://localhost:5173');
+        signOut(FRONT_DOMAIN);
     };
 
     const dashboardItems = [
