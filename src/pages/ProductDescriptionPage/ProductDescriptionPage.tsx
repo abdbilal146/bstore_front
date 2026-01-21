@@ -54,7 +54,7 @@ export default function ProductDescriptionPage() {
   });
 
   // Fetch Wishlist Data
-  const { data: wishlistData, refetch: refetchWishlist } = useQuery<any[]>({
+  const { data: wishlistData} = useQuery<any[]>({
     queryKey: ["wishlist"],
     queryFn: async () => {
       const token = await getIdToken();
