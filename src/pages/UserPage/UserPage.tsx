@@ -33,10 +33,10 @@ export default function UserPage() {
     };
 
     const dashboardItems = [
-        { type:'order' ,title: 'My Orders', icon: IconPackage, desc: 'Track and manage your orders' },
-        { type:'wishlist' ,title: 'Wishlist', icon: IconHeart, desc: 'Your favorite items' },
-        { type:'address' ,title: 'Addresses', icon: IconMapPin, desc: 'Manage your shipping addresses' },
-        { type:'setting' ,title: 'Settings', icon: IconSettings, desc: 'Account preferences' },
+        { type:'order' ,title: 'Mes Commandes', icon: IconPackage, desc: 'Suivez et gérez vos commandes' },
+        { type:'wishlist' ,title: 'Wishlist', icon: IconHeart, desc: 'Vos articles préférés' },
+        { type:'address' ,title: 'Addresses', icon: IconMapPin, desc: 'Gérez vos adresses de livraison' },
+        { type:'setting' ,title: 'Paramètres', icon: IconSettings, desc: 'Préférences du compte' },
     ];
 
     const onClickCat = (type:string) =>{
