@@ -27,6 +27,7 @@ import {
 } from '@mantine/core';
 import Footer from '../../components/Footer';
 import { useCartApi } from '../../api/cart';
+import Decimal from 'decimal.js';
 
 const erpBaseUrl = import.meta.env.VITE_ERP_NEXT_BASE_URL;
 
@@ -101,8 +102,16 @@ export default function CheckoutPage() {
     };
 
     const shippingCost = shippingMethod === 'EXPRESS' ? 15 : 0;
-    const subTotal = cartData?.total || 0;
+    const subTotal:number = cartData?.total || 0;
     const total = subTotal + shippingCost;
+
+    const subTotalDecimal = new Decimal(subTotal.toFixed(2))
+    const tax = subTotalDecimal.mul(new Decimal("0.20")); 
+
+    
+    const subtotalDec = new Decimal(total.toFixed(2));
+    const totalDecimal = subtotalDec.plus(tax);
+
 
     return (
         <>
@@ -220,7 +229,7 @@ export default function CheckoutPage() {
                                                             <span className="title">Livraison Express</span>
                                                             <span className="description">1-2 Jours Ouvrés</span>
                                                         </div>
-                                                        <span className="price">$15.00</span>
+                                                        <span className="price">€15.00</span>
                                                     </div>
                                                 </label>
                                             </Stack>
@@ -276,7 +285,7 @@ export default function CheckoutPage() {
                                             <Stack gap={2} style={{ flex: 1 }} className="item-details">
                                                 <Text className="item-name" fw={500}>{item.productId}</Text>
                                             </Stack>
-                                            <Text className="item-price" fw={600}>${item.productPrice}</Text>
+                                            <Text className="item-price" fw={600}>€{item.productPrice}</Text>
                                         </Group>
                                     ))}
                                 </Stack>
@@ -284,16 +293,21 @@ export default function CheckoutPage() {
                                 <Stack className="price-breakdown" gap="sm">
                                     <Group justify="space-between" className="price-row">
                                         <Text c="dimmed">Sous-total</Text>
-                                        <Text fw={500}>${subTotal.toFixed(2)}</Text>
+                                        <Text fw={500}>€{subTotal.toFixed(2)}</Text>
                                     </Group>
                                     <Group justify="space-between" className="price-row">
                                         <Text c="dimmed">Livraison</Text>
                                         <Text fw={500}>{shippingCost === 0 ? 'Gratuit' : `$${shippingCost.toFixed(2)}`}</Text>
                                     </Group>
+
+                                    <Group justify="space-between" className="price-row">
+                                        <Text c="dimmed">Taxes</Text>
+                                        <Text fw={500}>€{`${tax.toFixed(2)}`}</Text>
+                                    </Group>
                                     <Divider my="sm" variant="dashed" />
                                     <Group justify="space-between" className="price-row total">
                                         <Text size="lg" fw={700}>Total</Text>
-                                        <Text size="lg" fw={700}>${total.toFixed(2)}</Text>
+                                        <Text size="lg" fw={700}>€{`${totalDecimal.toFixed(2)}`}</Text>
                                     </Group>
                                 </Stack>
                             </Card>
