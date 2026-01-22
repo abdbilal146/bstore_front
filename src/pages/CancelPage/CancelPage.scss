@@ -1,0 +1,66 @@
+@import '../../index.css';
+
+.cancel-page {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f8f9fa;
+}
+
+.cancel-card {
+    background-color: white;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e9ecef;
+    overflow: hidden;
+    transition: transform 0.2s ease;
+    text-align: center;
+    max-width: 500px;
+    margin: 0 auto;
+
+    &:hover {
+        transform: translateY(-2px);
+    }
+}
+
+.cancel-header {
+    margin-bottom: 2rem;
+
+    .icon-wrapper {
+        margin: 0 auto 1.5rem;
+        transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        background-color: rgba(250, 82, 82, 0.1); 
+
+        &:hover {
+            transform: scale(1.1) rotate(5deg);
+        }
+    }
+
+    .title {
+        font-family: 'Outfit', sans-serif;
+        color: #212529;
+        margin-bottom: 0.5rem;
+    }
+
+    .subtitle {
+        color: #868e96;
+        margin: 0 auto;
+        line-height: 1.5;
+    }
+}
+
+.action-buttons {
+    margin-top: 1.5rem;
+
+    button {
+        font-weight: 500;
+        transition: all 0.2s;
+
+        &:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+    }
+}

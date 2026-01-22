@@ -7,6 +7,7 @@ import CheckoutPage from "../pages/CheckoutPage/CheckoutPage";
 import OrderConfirmationpage from "../pages/OrderConfirmationPage/OrderConfirmationPage";
 import MyOrderPage from "../pages/MyOrdersPage/MyOrderPage";
 import ProductBrandPage from "../pages/ProductBrandPage/ProductBrandPage";
+import CancelPage from "../pages/CancelPage/CancelPage";
 
 export const rootRoute = createRootRoute({
     component: () => {
@@ -74,6 +75,12 @@ export const brandProductPageRoute = createRoute({
     component: ProductBrandPage
 })
 
+export const cancelPage = createRoute({
+    getParentRoute: () => rootRoute,
+    path: '/checkout/cancel',
+    component: CancelPage
+})
+
 export const routeTree = rootRoute.addChildren([
     homeRoute,
     userRoute,
@@ -82,5 +89,6 @@ export const routeTree = rootRoute.addChildren([
     checkoutRoute,
     orderConfirmationPageRoute,
     myOrdersRoute,
-    brandProductPageRoute
+    brandProductPageRoute,
+    cancelPage
 ])
