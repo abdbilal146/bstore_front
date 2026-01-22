@@ -1,6 +1,6 @@
 import { useNavigate } from '@tanstack/react-router';
 import { IconX, IconShoppingBag } from '@tabler/icons-react';
-import './cancelPage.scss';
+import './CancelPage.scss';
 import {
     Container,
     Card,
