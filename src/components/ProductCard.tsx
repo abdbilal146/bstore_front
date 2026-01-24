@@ -28,7 +28,7 @@ export default function ProductCard({ imageSource, productId, onClick, productNa
     const addMutation = useMutation({
         mutationFn: async (id: string) => {
             const token = await getIdToken();
-            return addToWishlist(id, imageSource, token);
+            return addToWishlist(id, imageSource, productName, price, token);
         },
         onMutate: async (productId) => {
             await queryClient.cancelQueries({ queryKey: ['wishlist'] });

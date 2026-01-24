@@ -4,7 +4,7 @@ const BASE_URL = import.meta.env.VITE_API_BASE_URL
 const CLIENT_ID = import.meta.env.VITE_CLIENT_ID
 const CLIENT_SECRET = import.meta.env.VITE_CLIENT_SECRET
 
-export const addToWishlist = async (productId: string, image: string, token: any) => {
+export const addToWishlist = async (productId: string, image: string, productName:string,productPrice:string, token: any) => {
 
     const response = await fetch(
         `${BASE_URL}api/private/wishlist/add`,
@@ -19,6 +19,8 @@ export const addToWishlist = async (productId: string, image: string, token: any
             body: JSON.stringify({
                 productId,
                 image,
+                productName,
+                productPrice,
             })
         }
     )
