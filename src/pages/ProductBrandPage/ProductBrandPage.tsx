@@ -34,7 +34,7 @@ export default function ProductBrandPage() {
     }
 
     const filteredProducts: any[] = products?.data.filter((product: any) => {
-        return product.brand.toLowerCase() === brand.toLowerCase()
+        return product.brand?.toLowerCase() === brand.toLowerCase()
     }) ?? [];
 
     const goToPdp = (id: string) => {
