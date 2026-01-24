@@ -54,7 +54,7 @@ export default function ProductDescriptionPage() {
   });
 
   // Fetch Wishlist Data
-  const { data: wishlistData} = useQuery<any[]>({
+  const { data: wishlistData } = useQuery<any[]>({
     queryKey: ["wishlist"],
     queryFn: async () => {
       const token = await getIdToken();
@@ -113,20 +113,24 @@ export default function ProductDescriptionPage() {
     mutationFn: async ({
       productId,
       image,
+      itemName,
+      price,
     }: {
       productId: string;
       image: string;
+      itemName: string;
+      price: string;
     }) => {
       const token = await getIdToken();
-      return addToWishlist(productId, image, token);
+      return addToWishlist(productId, image, itemName, price, token);
     },
-    onMutate: async ({ productId, image }) => {
+    onMutate: async ({ productId, image, itemName, price }) => {
       // optimistically update wishlist
       await queryClient.cancelQueries({ queryKey: ["wishlist"] });
       const previousWishlist = queryClient.getQueryData<any[]>(["wishlist"]);
       queryClient.setQueryData<any[]>(["wishlist"], (old: any[] | undefined) => [
         ...(old || []),
-        { productId, image },
+        { productId, image, itemName, price },
       ]);
       return { previousWishlist };
     },
@@ -190,7 +194,9 @@ export default function ProductDescriptionPage() {
     } else {
       addWishlistMutation.mutate({
         productId: selectedVariant.name,
-        image: selectedVariant.image || ""
+        image: selectedVariant.image || "",
+        itemName: selectedVariant.item_name,
+        price: selectedVariant.custom_price
       });
     }
   }
